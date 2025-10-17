@@ -34,8 +34,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-a   = np.load( 'data-fig1.npy' )
-
 # enter additional commands here to reproduce the figure below
 
 # NOTE!
@@ -43,6 +41,13 @@ a   = np.load( 'data-fig1.npy' )
 # - If the figure disappears, use Assn-3.html as a reference
 
 # %%
+
+a = np.load("data-fig1.npy")
+x = np.linspace(0, len(a) - 1, len(a))
+plt.xlabel("Time")
+plt.ylabel("value")
+plt.plot(x, a, "o-", c="black")
+plt.show()
 
 # %% [markdown]
 # ___
@@ -52,6 +57,17 @@ a   = np.load( 'data-fig1.npy' )
 # Use `data-fig2.npy` for this figure.
 
 # %%
+a = np.load("data-fig2.npy")
+x = np.linspace(0, len(a[:, 0]) - 1, len(a[:, 0]))
+
+plt.plot(x, a[:, 0], c="Red", label="Red")
+plt.plot(x, a[:, 1], c="Green", label="Green")
+plt.plot(x, a[:, 2], c="Blue", label="Blue")
+
+plt.xlabel("X value")
+plt.ylabel("Y value")
+plt.legend()
+plt.show()
 
 # %% [markdown]
 # ___
@@ -59,6 +75,13 @@ a   = np.load( 'data-fig1.npy' )
 # ### Figure 3
 #
 # Use `data-fig3.npy` for this figure.
+a = np.load("data-fig3.npy")
+plt.scatter(a[:, 0], a[:, 1], c="blue", alpha=0.5, marker="o", s=200)
+plt.xlabel("X value")
+plt.ylabel("Y value")
+plt.show()
+
+print(a)
 
 # %%
 
@@ -70,6 +93,11 @@ a   = np.load( 'data-fig1.npy' )
 # Use `data-fig4.npy` for this figure.
 
 # %%
+a = np.load("data-fig4.npy")
+print(a)
+label = ["A", "B", "C", "D", "E"]
+left = np.arange(len(label))
+plt.bar(left, a, tick_label=label, color="gray")
 
 # %% [markdown]
 # ___
@@ -87,7 +115,7 @@ a   = np.load( 'data-fig1.npy' )
 #
 # ### UNGRADED BONUS QUESTION
 #
-# (This question is an *optional*, *ungraded* bonus problem.) 
+# (This question is an *optional*, *ungraded* bonus problem.)
 #
 # Use `data-fig-bonus-X.npy`, `data-fig-bonus-Y.npy` and `data-fig-bonus-Z.npy` for this figure.
 #
