@@ -1,53 +1,75 @@
 {
+  description = "My data analysis project";
+
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    # 1. nixpkgs をインプットとして定義
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    # 2. あなたの CustomPackages リポジトリをインプットとして追加
+    # (★) ここで "github:Takuya-Mukai/CustomPackages" を指定します
+    over-lay = {
+      url = "github:Takuya-Mukai/nix-overlay";
+
+      # (★) これが非常に重要です
+      # CustomPackages が使う nixpkgs のバージョンを、
+      # この Flake の nixpkgs のバージョンに強制的に合わせます。
+      # これにより、依存関係の衝突を防ぎます。
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
+
   outputs =
     {
       self,
       nixpkgs,
-      flake-utils,
+      over-lay,
     }:
-    flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
+    let
+      # サポートするシステム（アーキテクチャ）のリスト
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
 
-        # Python 環境を変数として定義
-        pythonEnv = pkgs.python3.withPackages (
-          ps: with ps; [
-            jupyterlab # jupyter-client を含みます
-            numpy
-            pandas
-            matplotlib
-            scikit-learn
-            ipykernel # <-- カーネル登録に必須
-          ]
-        );
+    in
+    {
+      # --- 開発環境 (devShells) ---
+      devShells = forAllSystems (
+        system:
+        let
+          # このプロジェクト用の pkgs を定義（jq を追加する例）
+          pkgs = import nixpkgs { inherit system; };
 
-      in
-      {
-        devShell = pkgs.mkShell {
-          # buildInputs には pythonEnv のみでOK
-          buildInputs = [
-            pythonEnv
-          ];
+          # (★) CustomPackages から dataAnalysis 環境を取得
+          baseDataShell = over-lay.devShells.${system}.dataAnalysis;
 
-          # --- ↓↓↓ ここからが組み込み部分 ↓↓↓ ---
-          shellHook = ''
-            PROJECT_NAME_RAW=$(basename "$PWD")
-            PROJECT_NAME=$(echo "$PROJECT_NAME_RAW" | tr '[:upper:]' '[:lower:]')
-            KERNEL_DIR="$HOME/.local/share/jupyter/kernels/$PROJECT_NAME"
+        in
+        {
+          # このリポジトリのデフォルトシェルを定義
+          # default = baseDataShell;
 
-            if [ ! -d "$KERNEL_DIR" ]; then
-              echo ">>> [flake.nix shellHook] Jupyter kernel '$PROJECT_NAME' not found. Registering..."
-              python3 -m ipykernel install --user --name="$PROJECT_NAME"
-              echo ">>> [flake.nix shellHook] Kernel registered."
-            fi
-          '';
-          # --- ↑↑↑ ここまで ---
-        };
-      }
-    );
+          # (応用例) もし dataAnalysis 環境に加えて
+          # このリポジトリだけで "jq" も使いたい場合
+          default = baseDataShell.overrideAttrs (
+            oldAttrs:
+            let
+              pyEnv = pkgs.python3.withPackages (ps: [ ps.openpyxl ]);
+            in
+            {
+              buildInputs = oldAttrs.buildInputs ++ [ pyEnv ];
+            }
+          );
+          # default = baseDataShell.overrideAttrs (oldAttrs: {
+          #   #   # 既存のパッケージリスト(buildInputs)に jq を追加する
+          #   buildInputs = oldAttrs.buildInputs ++ [ pkgs.python3.withPackages.openpyxl ];
+          # });
+        }
+      );
+
+      # (省略可) devShells.default を使う
+      devShell = forAllSystems (system: self.devShells.${system}.default);
+    };
 }
