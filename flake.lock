@@ -1,5 +1,23 @@
 {
   "nodes": {
+    "myDataAnalysisFlake": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1763058769,
+        "narHash": "sha256-BIUT7jVh86C/SDNsetyGRrO8oYk8LsX1fLVGDePKogI=",
+        "owner": "Takuya-Mukai",
+        "repo": "nix-overlay",
+        "rev": "c4c6bc343046d4d63c71de3c4559669ebce71d5e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Takuya-Mukai",
+        "repo": "nix-overlay",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1762844143,
@@ -16,30 +34,26 @@
         "type": "github"
       }
     },
-    "over-lay": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
+    "nixpkgs_2": {
       "locked": {
-        "lastModified": 1762939019,
-        "narHash": "sha256-3Jwx4mTtjSVqWJRvR7R59Cj9p6w3UU37xIsoHt4tjkc=",
-        "owner": "Takuya-Mukai",
-        "repo": "nix-overlay",
-        "rev": "1d7ffbde673e5274d430d248f28d332feeb6014f",
+        "lastModified": 1762844143,
+        "narHash": "sha256-SlybxLZ1/e4T2lb1czEtWVzDCVSTvk9WLwGhmxFmBxI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9da7f1cf7f8a6e2a7cb3001b048546c92a8258b4",
         "type": "github"
       },
       "original": {
-        "owner": "Takuya-Mukai",
-        "repo": "nix-overlay",
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs",
-        "over-lay": "over-lay"
+        "myDataAnalysisFlake": "myDataAnalysisFlake",
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },
