@@ -1,37 +1,20 @@
 {
-  description = "A flake dataAnalysis";
-
+  description = "Project using your dataAnalysis devShell";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    myDataAnalysisFlake.url = "github:Takuya-Mukai/nix-overlay";
+    myOverlay.url = "github:takuya-Mukai/nix-overlay";
   };
 
   outputs =
     {
       self,
       nixpkgs,
-      myDataAnalysisFlake,
+      myOverlay,
     }:
     let
-      supportedSystems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ];
-
-      forAllSystems =
-        f:
-        builtins.listToAttrs (
-          map (system: {
-            name = system;
-            value = f system;
-          }) supportedSystems
-        );
+      system = "x86_64-linux";
     in
     {
-      devShells = forAllSystems (system: {
-        default = myDataAnalysisFlake.devShells.${system}.dataAnalysis;
-      });
+      devShells.${system}.default = myOverlay.devShells.${system}.dataAnalysis;
     };
 }

@@ -1,19 +1,19 @@
 {
   "nodes": {
-    "myDataAnalysisFlake": {
+    "myOverlay": {
       "inputs": {
         "nixpkgs": "nixpkgs"
       },
       "locked": {
         "lastModified": 1763058769,
         "narHash": "sha256-BIUT7jVh86C/SDNsetyGRrO8oYk8LsX1fLVGDePKogI=",
-        "owner": "Takuya-Mukai",
+        "owner": "takuya-Mukai",
         "repo": "nix-overlay",
         "rev": "c4c6bc343046d4d63c71de3c4559669ebce71d5e",
         "type": "github"
       },
       "original": {
-        "owner": "Takuya-Mukai",
+        "owner": "takuya-Mukai",
         "repo": "nix-overlay",
         "type": "github"
       }
@@ -36,11 +36,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1762844143,
-        "narHash": "sha256-SlybxLZ1/e4T2lb1czEtWVzDCVSTvk9WLwGhmxFmBxI=",
+        "lastModified": 1762977756,
+        "narHash": "sha256-4PqRErxfe+2toFJFgcRKZ0UI9NSIOJa+7RXVtBhy4KE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9da7f1cf7f8a6e2a7cb3001b048546c92a8258b4",
+        "rev": "c5ae371f1a6a7fd27823bc500d9390b38c05fa55",
         "type": "github"
       },
       "original": {
@@ -52,7 +52,7 @@
     },
     "root": {
       "inputs": {
-        "myDataAnalysisFlake": "myDataAnalysisFlake",
+        "myOverlay": "myOverlay",
         "nixpkgs": "nixpkgs_2"
       }
     }
