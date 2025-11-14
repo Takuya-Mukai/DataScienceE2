@@ -5,11 +5,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1763058769,
-        "narHash": "sha256-BIUT7jVh86C/SDNsetyGRrO8oYk8LsX1fLVGDePKogI=",
+        "lastModified": 1763096535,
+        "narHash": "sha256-OFmLw/aaaSb0Gw2h2JZGh67VkGzS2lHZ3jRUo/REDKE=",
         "owner": "takuya-Mukai",
         "repo": "nix-overlay",
-        "rev": "c4c6bc343046d4d63c71de3c4559669ebce71d5e",
+        "rev": "a0a3ac4c716887c105923ac0f0749b5efd9d3251",
         "type": "github"
       },
       "original": {
