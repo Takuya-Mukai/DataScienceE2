@@ -28,7 +28,6 @@ class Title:
 
 # proccess data
 df = parse_data.df
-df.describe()
 df = df.dropna()
 
 # remove outliers

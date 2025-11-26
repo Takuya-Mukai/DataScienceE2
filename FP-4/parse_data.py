@@ -28,6 +28,10 @@ df = df.rename(
 )
 
 
+def main():
+    df.describe()
+
+
 # %% id="Tdr4vwT7"
 if __name__ == "__main__":
-    df.describe()
+    main()
