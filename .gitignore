@@ -1,3 +1,4 @@
 **/.direnv
 **/.ipynb_checkpoints
+**/__pycache__
 **/.jovian_cache
